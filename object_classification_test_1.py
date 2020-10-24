@@ -51,7 +51,7 @@ model.add(BatchNormalization())
 model.add(Dense(class_num))
 model.add(Activation('softmax'))
 
-epochs = 25
+epochs = 3
 optimizer = 'adam'
 loss = 'mse'
 
