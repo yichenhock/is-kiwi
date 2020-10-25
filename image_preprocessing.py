@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+import cv2
 
 def preprocess(image):
     # Resize
