@@ -9,8 +9,7 @@ def detect(image):
     # convert the image to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # compute the Scharr gradient magnitude representation of the images
-    # in both the x and y direction using OpenCV 2.4
+    # compute the Scharr gradient magnitude representation of the images in both the x and y direction using OpenCV 2.4
     ddepth = cv2.cv.CV_32F if imutils.is_cv2() else cv2.CV_32F
     gradX = cv2.Sobel(gray, ddepth=ddepth, dx=1, dy=0, ksize=-1)
     gradY = cv2.Sobel(gray, ddepth=ddepth, dx=0, dy=1, ksize=-1)
@@ -32,35 +31,31 @@ def detect(image):
     closed = cv2.dilate(closed, None, iterations=4)
 
      # find the contours in the thresholded image
-    cnts = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL,
-        cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
 
     # if no contours were found, return None
     if len(cnts) == 0:
         return None
 
-    # otherwise, sort the contours by area and compute the rotated
-    # bounding box of the largest contour
+    # otherwise, sort the contours by area and compute the rotated bounding box of the largest contour
     c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
     rect = cv2.minAreaRect(c)
-    box = cv2.cv.BoxPoints(
-        rect) if imutils.is_cv2() else cv2.boxPoints(rect)
+    box = cv2.cv.BoxPoints(rect) if imutils.is_cv2() else cv2.boxPoints(rect)
     box = np.int0(box)
 
     # return the bounding box of the barcode
     '''return box for video processing, use cv2 functions to display'''
-    #return box
-    cv2.drawContours(image, [box], -1, (0, 255, 0), 3)
+    return box
+    '''cv2.drawContours(image, [box], -1, (0, 255, 0), 3)
     cv2.imshow("Image", image)
-    cv2.waitKey(0)
+    cv2.waitKey(0)'''
 
 
 '''comment out when function used for video processing'''
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required = True,
-	help = "path to the image file")
+'''ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required = True, help = "path to the image file")
 args = vars(ap.parse_args())
 
-image = cv2.imread(args["image"])
-detect(image)
+Image = cv2.imread(args["image"])
+detect(Image)'''
