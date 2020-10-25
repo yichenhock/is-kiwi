@@ -30,9 +30,10 @@ def detect(image):
     closed = cv2.erode(closed, None, iterations=4)
     closed = cv2.dilate(closed, None, iterations=4)
 
-     # find the contours in the thresholded image
+    # find the contours in the thresholded image
     cnts = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
+    print (cnts)
 
     # if no contours were found, return None
     if len(cnts) == 0:
